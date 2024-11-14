@@ -1,4 +1,4 @@
-package functionservice
+package proxyservice
 
 import (
 	"errors"
@@ -17,10 +17,10 @@ var (
 type svc struct {
 	routes   map[string]string
 	routesMu sync.Mutex
-	router   mux.Router
+	router   *mux.Router
 }
 
-func New(r mux.Router) Functionservice {
+func New(r *mux.Router) ProxyService {
 	return &svc{
 		routes:   make(map[string]string),
 		routesMu: sync.Mutex{},
@@ -32,12 +32,11 @@ func (s *svc) AddRoute(r Route) error {
 	s.routesMu.Lock()
 	s.routes[r.Path] = r.Target
 	s.routesMu.Unlock()
-
 	targetURL, err := url.Parse(r.Target)
 	if err != nil {
 		return err
 	}
-	s.router.HandleFunc(r.Path+"/{rest:.*}", s.ProxyRequest(targetURL))
+	s.router.PathPrefix(r.Path).HandlerFunc(s.ProxyRequest(targetURL))
 	return nil
 }
 
@@ -56,7 +55,6 @@ func (s *svc) DeleteRoute(r Route) error {
 func (s *svc) GetRoutes() map[string]string {
 	s.routesMu.Lock()
 	defer s.routesMu.Unlock()
-
 	return s.routes
 }
 

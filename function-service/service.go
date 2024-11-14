@@ -1,18 +1,19 @@
 package functionservice
 
 import (
-	"net/http"
-	"net/url"
+	"github.com/google/uuid"
 )
 
-type Functionservice interface {
-	AddRoute(Route) error
-	DeleteRoute(Route) error
-	GetRoutes() map[string]string
-	ProxyRequest(*url.URL) http.HandlerFunc
+type FunctionService interface {
+	CreateFunction(Function) (int, error)
+	DeleteFunction(uuid.UUID) error
+	GetFunctions() ([]Function, error)
+	Close() error
 }
 
-type Route struct {
-	Path   string `json:"path"`
-	Target string `json:"target"`
+type Function struct {
+	Image string `json:"image"`
+	Port  int    `json:"port"`
+	Route string `json:"route"`
+	Id    uuid.UUID
 }
