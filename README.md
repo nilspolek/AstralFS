@@ -1,13 +1,13 @@
 # Astral
 
 ### Get All Actice Functions
-```json
+```http
 GET http://localhost:8080/function
 ```
 
 
 ### Add a Functions
-```json
+```http
 POST http://localhost:8080/function
 {
     "image": "nilspolek/echo-server",
@@ -17,7 +17,7 @@ POST http://localhost:8080/function
 ```
 
 ### Delete a Functions
-```json
+```http
 DELETE http://localhost:8080/function
 id = uuid of function
 {
