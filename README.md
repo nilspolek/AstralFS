@@ -19,7 +19,7 @@ POST http://localhost:8080/function
 ### Delete a Functions
 ```http
 DELETE http://localhost:8080/function
-id = uuid of function
+# id = uuid of function
 {
     "id": "e6268aa5-d312-46e1-a3ab-4ff928f5ab54"
 }
