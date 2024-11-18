@@ -22,6 +22,7 @@ require (
 	github.com/johnfercher/maroto/v2 v2.2.1 // indirect
 	github.com/jung-kurt/gofpdf v1.16.2 // indirect
 	github.com/mattn/go-runewidth v0.0.15 // indirect
+	github.com/mattn/go-sqlite3 v1.14.24 // indirect
 	github.com/moby/docker-image-spec v1.3.1 // indirect
 	github.com/nilspolek/goLog v1.0.7 // indirect
 	github.com/opencontainers/go-digest v1.0.0 // indirect

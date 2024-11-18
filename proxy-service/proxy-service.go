@@ -60,6 +60,16 @@ func (s *svc) GetRoutes() map[string]string {
 
 func (s *svc) ProxyRequest(url *url.URL) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		clientIP := r.RemoteAddr
+		if realIP := r.Header.Get("X-Forwarded-For"); realIP != "" {
+			clientIP = realIP + ", " + clientIP
+		}
+		r.Header.Set("X-Forwarded-For", clientIP)
+
+		r.Header.Set("X-Forwarded-Proto", r.URL.Scheme)
+
+		r.Header.Set("X-Forwarded-Host", r.Host)
+
 		proxy := httputil.NewSingleHostReverseProxy(url)
 		proxy.ServeHTTP(w, r)
 	}
